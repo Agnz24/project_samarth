@@ -45,6 +45,11 @@ class SMSRequest(BaseModel):
     sender_number: str
     message: str
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to my FastAPI server!"}
+
+
 @app.post("/process_sms/")
 def process_sms(request: SMSRequest):
     sender_number = request.sender_number
