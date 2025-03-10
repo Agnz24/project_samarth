@@ -87,4 +87,4 @@ def process_sms(request: SMSRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)  # Change port if needed
+    uvicorn.run(app, host="0.0.0.0", port=10000)  # Change port if needed
