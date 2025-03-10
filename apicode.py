@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import logging
 import traceback
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 logging.basicConfig(level=logging.INFO)
@@ -14,6 +14,14 @@ logger = logging.getLogger(__name__)
 # Get database URL from Render's environment variable
 DB_URL = os.getenv("DATABASE_URL", "mysql://root:IjZkUIijlMWQqcGxxFSPABRvksXEvSHl@trolley.proxy.rlwy.net:28128/railway")
 db_url = urlparse(DB_URL)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change to specific frontend URL if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db_connection():
     try:
