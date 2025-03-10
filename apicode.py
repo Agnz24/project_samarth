@@ -65,3 +65,7 @@ def process_sms(request: SMSRequest):
         print(f"Database error: {err}")
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail="Database connection failed")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=10000)
