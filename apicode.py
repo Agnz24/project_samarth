@@ -19,7 +19,7 @@ class SMSRequest(BaseModel):
     sender_number: str
     message: str
 
-app.post("/process_sms/")
+@app.post("/process_sms/")
 def process_sms(request: SMSRequest):
     sender_number = request.sender_number
     message = request.message
