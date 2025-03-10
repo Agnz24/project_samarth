@@ -49,7 +49,7 @@ def process_sms(request: SMSRequest):
 
         cursor = db.cursor()
 
-        cursor.execute("SELECT location FROM users WHERE mobile_number = %s", (sender_number,))
+        cursor.execute("SELECT location FROM usersrecord WHERE mobile_number = %s", (sender_number,))
         result = cursor.fetchone()
 
         if result is None:
@@ -57,7 +57,7 @@ def process_sms(request: SMSRequest):
 
         location = result[0]
 
-        cursor.execute("SELECT mobile_number FROM users WHERE location = %s AND mobile_number != %s", (location, sender_number))
+        cursor.execute("SELECT mobile_number FROM usersrecord WHERE location = %s AND mobile_number != %s", (location, sender_number))
         recipients = cursor.fetchall()
 
         recipient_numbers = [row[0] for row in recipients]
