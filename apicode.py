@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
 import mysql.connector
+from mysql.connector import Error
 from pydantic import BaseModel
+import os
 import traceback
 import logging
+from urllib.parse import urlparse
 
 app = FastAPI()
 
@@ -10,16 +13,25 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Function to connect to MySQL database
+# Get database URL from Railway environment variables
+DB_URL = os.getenv("DATABASE_URL")  # Railway provides this automatically
+
 def get_db_connection():
     try:
-        return mysql.connector.connect(
-            host="your_remote_database_host",  # Change this
-            user="your_db_user",  # Change this
-            password="your_db_password",  # Change this
-            database="messaging_db"
+        if not DB_URL:
+            raise Exception("DATABASE_URL environment variable is missing!")
+
+        # Parse the DATABASE_URL format from Railway
+        url = urlparse(DB_URL)
+        connection = mysql.connector.connect(
+            host=url.hostname,
+            user=url.username,
+            password=url.password,
+            database=url.path[1:],  # Remove leading "/"
+            port=url.port
         )
-    except mysql.connector.Error as err:
+        return connection
+    except Error as err:
         logger.error(f"Database Connection Error: {err}")
         return None
 
@@ -71,7 +83,7 @@ def process_sms(request: SMSRequest):
     except mysql.connector.Error as err:
         logger.error(f"Database error: {err}")
         logger.error(traceback.format_exc())
-        raise HTTPException(status_code=500, detail="Database connection failed")
+        raise HTTPException(status_code=500, detail="Database error occurred")
 
 if __name__ == "__main__":
     import uvicorn
