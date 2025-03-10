@@ -11,8 +11,9 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Get database URL from Render's environment variables
-DB_URL = os.getenv("DATABASE_URL")
+# Get database URL from Render's environment variable
+DB_URL = os.getenv("DATABASE_URL", "mysql://root:IjZkUIijlMWQqcGxxFSPABRvksXEvSHl@trolley.proxy.rlwy.net:28128/railway")
+db_url = urlparse(DB_URL)
 
 def get_db_connection():
     try:
