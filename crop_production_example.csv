@@ -1,0 +1,15 @@
+state,crop,year,production,area
+bihar,banana,2019,1500,200
+bihar,barley,2019,1200,180
+bihar,rice,2021,800,100
+bihar,ginger,2018,600,80
+bihar,gram,2020,900,120
+assam,tobacco,2020,700,50
+assam,turmeric,2020,650,60
+assam,urad,2021,400,40
+assam,wheat,2018,500,70
+maharashtra,rice,2019,2000,250
+tamil nadu,wheat,2020,1800,220
+kerala,sugarcane,2019,3200,1000
+kerala,wheat,2020,4200,2000
+kerala,rice,2020,1300,500
